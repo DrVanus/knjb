@@ -2,14 +2,15 @@
 //  Models.swift
 //  CSAI1
 //
-//  Defines coin-related models, plus a ChatMessage struct for chat messages.
-//  The Conversation struct is now in Conversation.swift to avoid duplication.
+//  Defines coin-related models, but *does not* declare ChatMessage or Conversation
+//  to avoid duplications with AIChatViewModel.swift or Conversation.swift.
 //
 
 import Foundation
 
 // MARK: - Coin Models
 
+/// Represents a coin as returned by the CoinGecko API.
 struct CoinGeckoCoin: Identifiable, Codable {
     let id: String
     let symbol: String
@@ -44,23 +45,12 @@ struct CoinGeckoCoin: Identifiable, Codable {
     let slug: String?
 }
 
+/// Represents the response from a trending coins endpoint.
 struct TrendingResponse: Codable {
     let coins: [TrendingCoinItem]
 }
 
+/// Wraps a `CoinGeckoCoin` within a "trending item" response.
 struct TrendingCoinItem: Codable {
     let item: CoinGeckoCoin
 }
-
-// MARK: - Chat Message Model
-
-/// Represents a single chat message from either the user or the AI.
-struct ChatMessage: Identifiable, Codable {
-    var id: UUID = UUID()
-    var sender: String   // "user" or "ai"
-    var text: String
-    var timestamp: Date = Date()
-    var isError: Bool = false
-}
-
-// NOTE: The Conversation struct is defined in Conversation.swift, so remove or comment out any old `Conversation` definition here.
